@@ -1,0 +1,12 @@
+[package]
+name = "rqhull"
+version = "0.1.0"
+authors = ["user"]
+edition = "2018"
+build = "build.rs"
+
+[dependencies]
+
+[build-dependencies]
+openssl = { version = "0.10", features = ["vendored"] }
+git2 = "0.8.0"
