@@ -8,5 +8,5 @@ build = "build.rs"
 [dependencies]
 
 [build-dependencies]
-openssl = { version = "0.10", features = ["vendored"] }
-git2 = "0.8.0"
+cmake = "0.1.35"
+bindgen = "0.46.0"
