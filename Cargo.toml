@@ -6,7 +6,15 @@ edition = "2018"
 build = "build.rs"
 
 [dependencies]
+ndarray = "0.12.1"
+itertools = "0.8.0"
+libc = "0.2.47"
+
 
 [build-dependencies]
 cmake = "0.1.35"
 bindgen = "0.46.0"
+cc = "1.0.28"
+
+[features]
+gen-code = []

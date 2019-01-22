@@ -1,4 +1,5 @@
 extern crate bindgen;
+extern crate cc;
 
 use std::path::{Path, PathBuf};
 use std::process::Command;
@@ -13,9 +14,13 @@ fn main() {
     let qhull_dir = Path::new("./qhull");
 
     update_submodules(&[qhull_dir]);
-    build_qhull(qhull_dir)
+    build_qhull(qhull_dir);
+    build_helper()
 
 }
+
+
+
 
 fn update_submodules(git_submodules: &[&Path]) {
 
@@ -29,7 +34,11 @@ fn update_submodules(git_submodules: &[&Path]) {
 
 }
 
-
+fn build_helper() {
+    cc::Build::new()
+        .file("src/helper.c")
+        .compile("helper");
+}
 
 fn build_qhull(source_dir: &Path) {
     let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
@@ -43,7 +52,7 @@ fn build_qhull(source_dir: &Path) {
 
     use std::fs;
 
-    #[cfg(feature = "bindgen")]
+    #[cfg(feature = "gen-code")]
         {
             let bindings = bindgen::Builder::default().
                 header(source_dir.join("src/libqhull_r/qhull_ra.h").to_str().expect("problem with header file path")).
