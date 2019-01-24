@@ -30,7 +30,7 @@ fn read_output(output: &str) -> (std::vec::Vec<[f64;2]>,std::vec::Vec<std::vec::
     let mut regions = read_output.by_ref().take(nregion).map(|l| l.skip(1).map(|e| e.parse::<i32>().unwrap() - 1)).map(|e| {let mut l = e.collect::<Vec<i32>>();l.sort_by(|a, b| a.partial_cmp(b).unwrap());l}).collect::<Vec<Vec<i32>>>();
 
 
-    let mut ridges:(std::vec::Vec<[i32;2]>,std::vec::Vec<std::vec::Vec<i32>>)= read_output.by_ref().skip(1).map(|l| {let mut base = l.map(|e| e.parse::<i32>().unwrap());let mut left = base.by_ref().skip(1).take(2);let mut l:[i32;2] = [left.next().unwrap(), left.next().unwrap()];l.sort();;let right = base.by_ref().map(|x| x - 1).collect::<Vec<i32>>();(l, right)}).unzip();
+    let ridges:(std::vec::Vec<[i32;2]>,std::vec::Vec<std::vec::Vec<i32>>)= read_output.by_ref().skip(1).map(|l| {let mut base = l.map(|e| e.parse::<i32>().unwrap());let mut left = base.by_ref().skip(1).take(2);let mut l:[i32;2] = [left.next().unwrap(), left.next().unwrap()];l.sort();;let right = base.by_ref().map(|x| x - 1).collect::<Vec<i32>>();(l, right)}).unzip();
 
     let (mut ridge_points, mut ridge_vertices) = ridges;
     vertices.sort_by(|a, b| a.partial_cmp(b).unwrap());
@@ -83,7 +83,7 @@ fn simple() {
 
 
 
-    let mut points = array![[0.0, 0.0], [0.0, 1.0], [0.0, 2.0],
+    let  points = array![[0.0, 0.0], [0.0, 1.0], [0.0, 2.0],
                                      [1.0, 0.0], [1.0, 1.0], [1.0, 2.0],
                                      [2.0, 0.0], [2.0, 1.0], [2.0, 2.0]];
 

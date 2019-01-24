@@ -45,8 +45,12 @@ impl Iterator for SetIter {
 }
 
 
-#[macro_use(array)]
+#[cfg(test)]
+#[macro_use]
 extern crate ndarray;
+#[cfg(not(test))]
+extern crate ndarray;
+
 extern crate itertools;
 extern crate libc;
 
@@ -60,8 +64,6 @@ use ndarray::{Array1, Array2};
 use std::mem;
 use std::ffi::CString;
 use std::os::raw::c_int;
-use std::os::raw::c_uint;
-use itertools::concat;
 
 
 enum QhullMode {
@@ -213,7 +215,7 @@ impl<'a> QHull<'a> {
             &mut *vertex
         };
 
-        while  unsafe {!vertex.next.is_null()}  {
+        while  !vertex.next.is_null() {
             unsafe {
                 QHull::qh_order_vertexneighbors_nd(self.qh, (self.points.shape()[1]+1) as c_int, vertex);
                 let i = qh_pointid(self.qh, vertex.point);
@@ -259,9 +261,7 @@ impl<'a> QHull<'a> {
         let mut cap = vv.capacity();
         use std::mem;
 
-        unsafe {
-            mem::forget(vv);
-        }
+        mem::forget(vv);
 
 
         let mut facet_ptr = unsafe {

@@ -72,9 +72,13 @@ fn build_qhull(source_dir: &Path) {
 
 
 
-
+    let libname = if env::var("OPT_LEVEL").map(|ol| ol == "0").unwrap_or(false) {
+        "qhullstatic_rd"
+    } else {
+        "qhullstatic_r"
+    };
 
     println!("cargo:rustc-link-search=native={}", dst.join("lib").display());
-    println!("cargo:rustc-link-lib=static=qhullstatic_rd");
+    println!("cargo:rustc-link-lib=static={}", libname);
 
 }
