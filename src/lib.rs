@@ -387,8 +387,8 @@ impl<'a> Drop for QHull<'a> {
 
 
 
-pub struct Voronoi{
-    pub points : Array2<f64>,
+pub struct Voronoi<'p>{
+    pub points : &'p Array2<f64>,
     pub vertices: Vec<[f64;2]>,
     pub ridge_points:Vec<[i32;2]>,
     pub ridge_vertices: Vec<Vec<i32>>,
@@ -398,12 +398,12 @@ pub struct Voronoi{
 
 
 
-impl Voronoi {
+impl<'a> Voronoi<'a> {
 
 
 
 
-    pub fn new(mut points: Array2<f64>) -> Result<Voronoi,QhullError> {
+    pub fn new<'p>( points: &'p mut Array2<f64>) -> Result<Voronoi<'p>,QhullError> {
 
 
 
@@ -419,7 +419,7 @@ impl Voronoi {
             ridge_vertices,
             regions,
             point_region) = {
-            let qh = QHull::new(QhullMode::Voronoi, &mut points, options)?;
+            let qh = QHull::new(QhullMode::Voronoi, points, options)?;
             qh.get_vornoi_diagram()
         };
 

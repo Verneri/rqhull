@@ -83,7 +83,7 @@ fn simple() {
 
 
 
-    let  points = array![[0.0, 0.0], [0.0, 1.0], [0.0, 2.0],
+    let mut points = array![[0.0, 0.0], [0.0, 1.0], [0.0, 2.0],
                                      [1.0, 0.0], [1.0, 1.0], [1.0, 2.0],
                                      [2.0, 0.0], [2.0, 1.0], [2.0, 2.0]];
 
@@ -93,7 +93,7 @@ fn simple() {
     let (vertices, regions, ridge_points, ridge_vertices) = read_output(output);
 
 
-    let voronoi = super::Voronoi::new(points).unwrap();
+    let voronoi = super::Voronoi::new(&mut points).unwrap();
 
     let mut vvertices = voronoi.vertices.clone();
     vvertices.sort_by(|a, b| a.partial_cmp(b).unwrap());
